@@ -1,0 +1,93 @@
+# rust web frameworks - Google Search
+> https://www.google.com/search?q=rust+web+frameworks&udm=14&hl=en&gl=US
+
+Accessibility  [1]Skip to main content help [1]
+---
+AI Mode [2]
+All [3]
+Images [4]
+Forums [5]
+Short videos [6]
+Web
+Flights [7]
+More
+Tools
+---
+GitHub [8]
+https://github.com › flosse › rust-web-framework-compa... [8]
+flosse/rust-web-framework-comparison [8]
+---
+Reddit · r/rust [9]
+20+ comments · 1 year ago [9]
+How do I choose between the dozens of web frameworks? [9]
+---
+I spent a few days getting my feet wet with rust, and now I'd like to start some web development (REST services and SSR web pages). The problem is that ...
+---
+Medium · Aarambh Dev Hub [10]
+7 months ago [10]
+
+Why Rust for Web... [11] Axum: The New Default [12] What makes Actix Web special [13]
+---
+Rust Web Frameworks in 2026: Axum vs Actix Web vs Rocket vs [10]
+---
+Are We Web Yet? [14]
+https://www.arewewebyet.org › topics › frameworks [14]
+Web Frameworks » AWWY? [14]
+---
+Rocket Web Framework [15]
+https://rocket.rs [15]
+Rocket - Simple, Fast, Type-Safe Web Framework for Rust [15]
+---
+The Rust Programming Language Forum [16]
+https://users.rust-lang.org › what-web-framework-to-use [16]
+What web framework to use - help [16]
+---
+shuttle.dev [17]
+https://www.shuttle.dev › rust-web-framework-comparison [17]
+Best Rust Web Frameworks to Use in 2023 - Shuttle.dev [17]
+---
+Loco.rs [18]
+https://loco.rs [18]
+Loco — the one-person framework for Rust [18]
+---
+GitHub [19]
+https://github.com › venuswhispers › Rust-awesome-fra... [19]
+venuswhispers/Rust-awesome-frameworks [19]
+---
+Rustfinity [20]
+https://www.rustfinity.com › blog › best-rust-web-frame... [20]
+Best Rust Web Frameworks (2024) [20]
+---
+1 Page 2 [21] Page 3 [22] Page 4 [23] Page 5 [24] Page 6 [25] Page 7 [26] Page 8 [27] Page 9 [28] Page 10 [29]
+Next [30]
+
+[1] https://support.google.com/websearch/answer/181196?hl=en
+[2] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&udm=50&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832TjxNIFbwIM4usFl5WSp0kzGL3LVMqDDlq5XLs4_r426jesoLaWU4nJAcafnrSz6WptNGae0tT_HgeZFG4EoxdVEcVZcJVvFTWj2yJOCMy-C4a77b4vQyY8h_WEquZyAvHIf-I0vlN--UNuupRe7_7R3yLz4O_Sbu5WYGxlutEZ2ccTaJA&vsint=&aep=1&ntc=1&cs=0&sa=X&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q2J8OegQIEhAD
+[3] https://www.google.com/search?sca_esv=3293b059aa9c7b4a&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&q=rust+web+frameworks&source=lnms&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832TjxNIFbwIM4usFl5WSp0kzGL3LVMqDDlq5XLs4_r426jesoLaWU4nJAcafnrSz6WptNGae0tT_HgeZFG4EoxdVEcVZcJVvFTWj2yJOCMy-C4a77b4vQyY8h_WEquZyAvHIf-I0vlN--UNuupRe7_7R3yLz4O_Sbu5WYGxlutEZ2ccTaJA&sa=X&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q0pQJegQIExAB
+[4] https://www.google.com/search?sca_esv=3293b059aa9c7b4a&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&udm=2&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832TjxNIFbwIM4usFl5WSp0kzGL3LVMqDDlq5XLs4_r426jesoLaWU4nJAcafnrSz6WptNGae0tT_HgeZFG4EoxdVEcVZcJVvFTWj2yJOCMy-C4a77b4vQyY8h_WEquZyAvHIf-I0vlN--UNuupRe7_7R3yLz4O_Sbu5WYGxlutEZ2ccTaJA&q=rust+web+frameworks&sa=X&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4QtKgLegQIGBAB
+[5] https://www.google.com/search?sca_esv=3293b059aa9c7b4a&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&udm=forums&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832TjxNIFbwIM4usFl5WSp0kzGL3LVMqDDlq5XLs4_r426jesoLaWU4nJAcafnrSz6WptNGae0tT_HgeZFG4EoxdVEcVZcJVvFTWj2yJOCMy-C4a77b4vQyY8h_WEquZyAvHIf-I0vlN--UNuupRe7_7R3yLz4O_Sbu5WYGxlutEZ2ccTaJA&q=rust+web+frameworks&sa=X&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Qs6gLegQIFxAB
+[6] https://www.google.com/search?sca_esv=3293b059aa9c7b4a&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&udm=39&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832TjxNIFbwIM4usFl5WSp0kzGL3LVMqDDlq5XLs4_r426jesoLaWU4nJAcafnrSz6WptNGae0tT_HgeZFG4EoxdVEcVZcJVvFTWj2yJOCMy-C4a77b4vQyY8h_WEquZyAvHIf-I0vlN--UNuupRe7_7R3yLz4O_Sbu5WYGxlutEZ2ccTaJA&q=rust+web+frameworks&sa=X&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Qs6gLegQIFBAB
+[7] https://www.google.com/travel/flights?sca_esv=3293b059aa9c7b4a&hl=en&gl=US&output=search&q=rust+web+frameworks&source=lnms&fbs=ABfTbFVyMZGZf1hfvX9uKjN_-G8c4u0nXx4bEIpwm1lnNH832TjxNIFbwIM4usFl5WSp0kzGL3LVMqDDlq5XLs4_r426jesoLaWU4nJAcafnrSz6WptNGae0tT_HgeZFG4EoxdVEcVZcJVvFTWj2yJOCMy-C4a77b4vQyY8h_WEquZyAvHIf-I0vlN--UNuupRe7_7R3yLz4O_Sbu5WYGxlutEZ2ccTaJA&ved=1t:200715&ictx=111
+[8] https://github.com/flosse/rust-web-framework-comparison
+[9] https://www.reddit.com/r/rust/comments/1ji62cr/how_do_i_choose_between_the_dozens_of_web/
+[10] https://aarambhdevhub.medium.com/rust-web-frameworks-in-2026-axum-vs-actix-web-vs-rocket-vs-warp-vs-salvo-which-one-should-you-2db3792c79a2
+[11] https://aarambhdevhub.medium.com/rust-web-frameworks-in-2026-axum-vs-actix-web-vs-rocket-vs-warp-vs-salvo-which-one-should-you-2db3792c79a2#20e6
+[12] https://aarambhdevhub.medium.com/rust-web-frameworks-in-2026-axum-vs-actix-web-vs-rocket-vs-warp-vs-salvo-which-one-should-you-2db3792c79a2#9ec0
+[13] https://aarambhdevhub.medium.com/rust-web-frameworks-in-2026-axum-vs-actix-web-vs-rocket-vs-warp-vs-salvo-which-one-should-you-2db3792c79a2#b34b
+[14] https://www.arewewebyet.org/topics/frameworks/
+[15] https://rocket.rs/
+[16] https://users.rust-lang.org/t/what-web-framework-to-use/47100
+[17] https://www.shuttle.dev/blog/2023/08/23/rust-web-framework-comparison
+[18] https://loco.rs/
+[19] https://github.com/venuswhispers/Rust-awesome-frameworks
+[20] https://www.rustfinity.com/blog/best-rust-web-frameworks
+[21] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&udm=14&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&ei=0eS3aoOLF4uB1e8P66aU8Q8&start=10&sa=N&sstk=AS6-VmLXoGTpAVYzOLYyaaRdJvHTPHVsKSDIAzDlBGEjM2W7aCWDR8z6PCboD8A12peSskSwIVlx0BKWdnflA20keIWUZjITBtUfqg&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q8tMDegQIKRAE
+[22] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&udm=14&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&ei=0eS3aoOLF4uB1e8P66aU8Q8&start=20&sa=N&sstk=AS6-VmLXoGTpAVYzOLYyaaRdJvHTPHVsKSDIAzDlBGEjM2W7aCWDR8z6PCboD8A12peSskSwIVlx0BKWdnflA20keIWUZjITBtUfqg&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q8tMDegQIKRAG
+[23] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&udm=14&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&ei=0eS3aoOLF4uB1e8P66aU8Q8&start=30&sa=N&sstk=AS6-VmLXoGTpAVYzOLYyaaRdJvHTPHVsKSDIAzDlBGEjM2W7aCWDR8z6PCboD8A12peSskSwIVlx0BKWdnflA20keIWUZjITBtUfqg&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q8tMDegQIKRAI
+[24] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&udm=14&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&ei=0eS3aoOLF4uB1e8P66aU8Q8&start=40&sa=N&sstk=AS6-VmLXoGTpAVYzOLYyaaRdJvHTPHVsKSDIAzDlBGEjM2W7aCWDR8z6PCboD8A12peSskSwIVlx0BKWdnflA20keIWUZjITBtUfqg&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q8tMDegQIKRAK
+[25] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&udm=14&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&ei=0eS3aoOLF4uB1e8P66aU8Q8&start=50&sa=N&sstk=AS6-VmLXoGTpAVYzOLYyaaRdJvHTPHVsKSDIAzDlBGEjM2W7aCWDR8z6PCboD8A12peSskSwIVlx0BKWdnflA20keIWUZjITBtUfqg&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q8tMDegQIKRAM
+[26] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&udm=14&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&ei=0eS3aoOLF4uB1e8P66aU8Q8&start=60&sa=N&sstk=AS6-VmLXoGTpAVYzOLYyaaRdJvHTPHVsKSDIAzDlBGEjM2W7aCWDR8z6PCboD8A12peSskSwIVlx0BKWdnflA20keIWUZjITBtUfqg&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q8tMDegQIKRAO
+[27] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&udm=14&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&ei=0eS3aoOLF4uB1e8P66aU8Q8&start=70&sa=N&sstk=AS6-VmLXoGTpAVYzOLYyaaRdJvHTPHVsKSDIAzDlBGEjM2W7aCWDR8z6PCboD8A12peSskSwIVlx0BKWdnflA20keIWUZjITBtUfqg&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q8tMDegQIKRAQ
+[28] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&udm=14&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&ei=0eS3aoOLF4uB1e8P66aU8Q8&start=80&sa=N&sstk=AS6-VmLXoGTpAVYzOLYyaaRdJvHTPHVsKSDIAzDlBGEjM2W7aCWDR8z6PCboD8A12peSskSwIVlx0BKWdnflA20keIWUZjITBtUfqg&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q8tMDegQIKRAS
+[29] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&udm=14&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&ei=0eS3aoOLF4uB1e8P66aU8Q8&start=90&sa=N&sstk=AS6-VmLXoGTpAVYzOLYyaaRdJvHTPHVsKSDIAzDlBGEjM2W7aCWDR8z6PCboD8A12peSskSwIVlx0BKWdnflA20keIWUZjITBtUfqg&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q8tMDegQIKRAU
+[30] https://www.google.com/search?q=rust+web+frameworks&sca_esv=3293b059aa9c7b4a&udm=14&hl=en&gl=US&sxsrf=APpeQnt0pD4xDs268m9Q8_VDb8kmKmB17A:1790436561388&ei=0eS3aoOLF4uB1e8P66aU8Q8&start=10&sa=N&sstk=AS6-VmLXoGTpAVYzOLYyaaRdJvHTPHVsKSDIAzDlBGEjM2W7aCWDR8z6PCboD8A12peSskSwIVlx0BKWdnflA20keIWUZjITBtUfqg&ved=2ahUKEwjDt-_5x4yXAxWLQPUHHWsTJf4Q8NMDegQIKRAW

@@ -1,0 +1,14 @@
+# dsh-web-search-doko bundle patch.
+#
+# Registers the doko-backed web providers, then points the `web` service
+# (from `@deepseek-ai/dsh-base`) at doko. Rows are applied as a layer over
+# `@deepseek-ai/dsh-base`, so this restates the whole `web` config.
+- insert:
+    - id: web-search-doko
+      name: 'dsh-web-search-doko'
+
+- id: web
+  name: '@deepseek-ai/dsh-web'
+  config:
+    searchProvider: doko
+    fetchProvider: doko

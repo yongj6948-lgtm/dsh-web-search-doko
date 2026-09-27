@@ -1,0 +1,6 @@
+{
+  "meta": {
+    "title": "Doko 网页搜索",
+    "description": "通过本地 doko-server（Chrome + Dokobot）搜索、读取网页并截图。"
+  }
+}
