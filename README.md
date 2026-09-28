@@ -35,10 +35,12 @@ allowBuilds:
 ```
 
 ```sh
-dsh plugin --profile web add github:<you>/dsh-web-search-doko#<sha>
-dsh --profile web --dump-config | grep -A2 dsh-web-search-doko
+dsh plugin --profile web add github:<owner>/dsh-web-search-doko#<sha>
+dsh --profile web --dump-config | grep -A3 'id: web$'
 dsh --profile web
 ```
+
+Pin `#<sha>` for a reproducible install; omit it to follow the default branch.
 
 The bundle patch registers the plugin and points the web service at it:
 
@@ -46,14 +48,26 @@ The bundle patch registers the plugin and points the web service at it:
 - insert:
     - id: web-search-doko
       name: 'dsh-web-search-doko'
-- id: dsh-web
+- id: web
   config:
     searchProvider: doko
     fetchProvider: doko
 ```
 
-Drop the `dsh-web` override to keep the built-in fetch provider and only switch
-search (or vice versa).
+The target id is `web` (the `@deepseek-ai/dsh-web` service row from
+`dsh-base`), **not** `dsh-web` — a wrong id fails the patch with
+`entry "dsh-web" not found`. Drop the `web` override to keep the built-in
+fetch provider and only switch search (or vice versa).
+
+To override the endpoint without editing this package, add your own layer to
+the profile's `cordis.patch.yml`:
+
+```yaml
+- id: web-search-doko
+  name: 'dsh-web-search-doko'
+  config:
+    baseURL: 'http://127.0.0.1:8080'
+```
 
 ## Configure
 
