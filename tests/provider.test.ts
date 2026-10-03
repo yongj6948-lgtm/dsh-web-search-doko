@@ -83,3 +83,20 @@ test('fetch provider keeps the first result when the retry is not better', async
   const result = await provider.fetch({ url: 'https://js.example' })
   assert.equal(result.body.content, short)
 })
+
+test('fetch provider hard-fails when doko returns no text (e.g. a PDF)', async () => {
+  const provider = new DokoFetchProvider(options, fakeClient([
+    { url: 'https://example.com/file.pdf', text: '', screens: 1, fast: false },
+  ]))
+  await assert.rejects(
+    () => provider.fetch({ url: 'https://example.com/file.pdf' }),
+    /no readable text/,
+  )
+})
+
+test('normalizeReadResult coerces a missing text field to an empty string', async () => {
+  const { normalizeReadResult } = await import('../lib/client.js')
+  const result = normalizeReadResult({ url: 'https://example.com/file.pdf', screens: 1 })
+  assert.equal(result.text, '')
+  assert.equal(result.url, 'https://example.com/file.pdf')
+})

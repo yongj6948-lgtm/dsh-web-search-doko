@@ -5,6 +5,7 @@
  * @module dsh-web-search-doko/fetch-provider
  */
 
+import { WebError } from '@deepseek-ai/dsh-web'
 import type {
   WebFetchProvider,
   WebFetchRequest,
@@ -37,20 +38,29 @@ export class DokoFetchProvider implements WebFetchProvider {
   }
 
   async fetch(request: WebFetchRequest, signal?: AbortSignal): Promise<WebFetchResult> {
-    const first = await this.client.read(request.url, this.options.readScreens, signal)
+    let result = await this.client.read(request.url, this.options.readScreens, signal)
 
     // Fast path is only chosen for a single screen; a short result on that path
     // usually means JS-rendered content the browser would still surface. One
     // retry at two screens forces the browser and never loops (screens >= 2 is
     // not fast-eligible on the server).
-    if (first.fast && meaningfulChars(first.text) < FAST_PARTIAL_CHARS && this.options.readScreens < 2) {
+    if (result.fast && meaningfulChars(result.text) < FAST_PARTIAL_CHARS && this.options.readScreens < 2) {
       const retried = await this.client.read(request.url, 2, signal)
-      if (meaningfulChars(retried.text) >= meaningfulChars(first.text)) {
-        return toFetchResult(request.url, retried)
-      }
+      if (meaningfulChars(retried.text) >= meaningfulChars(result.text)) result = retried
     }
 
-    return toFetchResult(request.url, first)
+    // An empty body is a hard failure, not a valid result: doko completes the
+    // read but returns no `text` for non-HTML payloads such as PDFs. Throwing
+    // lets `doko-first` rescue with the keyless ring (Exa extracts PDF text),
+    // and avoids leaking `undefined` content that trips INVALID_TOOL_OUTPUT.
+    if (meaningfulChars(result.text) === 0) {
+      throw new WebError(
+        `doko returned no readable text for ${request.url}`,
+        'WEB_PROVIDER_ERROR',
+      )
+    }
+
+    return toFetchResult(request.url, result)
   }
 }
 
@@ -59,7 +69,7 @@ function toFetchResult(requestUrl: string, result: { url: string; text: string }
   return {
     url: result.url.length > 0 ? result.url : requestUrl,
     statusCode: 200,
-    body: { kind: 'text', content: result.text },
+    body: { kind: 'text', content: result.text ?? '' },
     truncated: false,
   }
 }

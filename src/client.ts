@@ -49,7 +49,7 @@ export class DokoClient {
 
   /** Run one search through doko's browser-backed SERP reader. */
   async search(query: string, call: DokoCallOptions = {}, signal?: AbortSignal): Promise<DokoReadResult> {
-    return this.call('Search', {
+    const raw = await this.call<Record<string, unknown>>('Search', {
       query,
       engine: call.engine ?? this.options.engine,
       ...call.screens !== undefined ? { screens: call.screens } : {},
@@ -57,11 +57,13 @@ export class DokoClient {
         ? { tbs: call.tbs ?? this.options.tbs }
         : {},
     }, signal)
+    return normalizeReadResult(raw)
   }
 
   /** Read one URL through doko's browser-backed extractor. */
   async read(url: string, screens: number, signal?: AbortSignal): Promise<DokoReadResult> {
-    return this.call('Read', { url, screens }, signal)
+    const raw = await this.call<Record<string, unknown>>('Read', { url, screens }, signal)
+    return normalizeReadResult(raw)
   }
 
   /** Probe server health (used by the smoke script, not by providers). */
@@ -122,10 +124,19 @@ export class DokoClient {
  * proto3 JSON emits camelCase but legacy REST echoed snake_case) into the
  * client's canonical shape.
  *
+ * Every field is coerced to its declared type here, so callers never receive
+ * `undefined` where the seam expects a string. This matters for non-HTML URLs
+ * (e.g. a PDF): doko completes the read but omits `text`, and leaking
+ * `undefined` into a tool result fails DSH's lossless-JSON check
+ * (`INVALID_TOOL_OUTPUT`).
+ *
  * @param raw - the decoded response object.
  * @returns the normalized read result.
  */
-export function normalizeReadResult(raw: Record<string, unknown>): DokoReadResult {
+export function normalizeReadResult(raw: Record<string, unknown> | null | undefined): DokoReadResult {
+  if (raw === null || raw === undefined) {
+    return { url: '', text: '', screens: 0, fast: false }
+  }
   const sessionId = asString(raw['sessionId'] ?? raw['session_id'])
   return {
     url: asString(raw['url']) ?? '',

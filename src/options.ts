@@ -20,6 +20,25 @@ export type DokoEngine = (typeof DOKO_ENGINES)[number]
 /** Stable provider id registered with `ctx.web`. */
 export const DOKO_PROVIDER_ID = 'doko'
 
+/**
+ * Anonymous, no-API-key web vendors borrowed from Hermes Agent's free-tier ring.
+ * `exa` and `parallel` are MCP endpoints (`mcp.exa.ai`, `search.parallel.ai`);
+ * `keenable` is a public REST tier. All are rate-limited and last-resort.
+ */
+export const FREE_VENDORS = ['exa', 'keenable', 'parallel', 'ddgs'] as const
+
+/** One supported keyless vendor name. */
+export type FreeVendor = (typeof FREE_VENDORS)[number]
+
+/** Stable provider id registered with `ctx.web` for the keyless ring. */
+export const FREE_PROVIDER_ID = 'free'
+
+/** Default keyless ring order (best-quality/fastest first). DDGS is opt-in. */
+export const FREE_DEFAULT_VENDORS: readonly FreeVendor[] = ['exa', 'keenable', 'parallel']
+
+/** Default per-request timeout for keyless vendors, in milliseconds. */
+export const FREE_DEFAULT_TIMEOUT_MS = 30_000
+
 /** Default doko-server endpoint (same host as the harness unless configured). */
 export const DOKO_DEFAULT_BASE_URL = 'http://127.0.0.1:8080'
 
@@ -54,6 +73,13 @@ export interface Config {
    * parsing finds no sources).
    */
   includeSerpText?: boolean
+  /**
+   * Keyless vendor ring order for the `free` provider. Defaults to
+   * `['exa', 'keenable', 'parallel']`; pass `[]` to disable the ring.
+   */
+  freeVendors?: FreeVendor[]
+  /** Per-request timeout for keyless vendors, in milliseconds. Defaults to `30000`. */
+  freeTimeoutMs?: number
 }
 
 /** Schemastery schema validating {@link Config} in `cordis.yml`. */
@@ -66,6 +92,8 @@ export const Config: z<Config> = z.object({
   timeoutMs: z.number().step(1).min(1),
   tbs: z.string(),
   includeSerpText: z.boolean(),
+  freeVendors: z.array(z.union(FREE_VENDORS)),
+  freeTimeoutMs: z.number().step(1).min(1),
 })
 
 /** Fully resolved provider options (no optional tuning fields). */
@@ -78,6 +106,28 @@ export interface DokoOptions {
   readonly timeoutMs: number
   readonly tbs?: string
   readonly includeSerpText: boolean
+}
+
+/** Fully resolved keyless-ring options. */
+export interface FreeOptions {
+  readonly vendors: readonly FreeVendor[]
+  readonly timeoutMs: number
+}
+
+/**
+ * Resolve the keyless ring config. Vendors listed but unknown to this build are
+ * dropped so a newer config cannot crash an older plugin.
+ *
+ * @param config - validated plugin config.
+ * @returns the keyless ring options.
+ */
+export function resolveFreeOptions(config: Config): FreeOptions {
+  const known = (config.freeVendors ?? FREE_DEFAULT_VENDORS)
+    .filter((vendor): vendor is FreeVendor => (FREE_VENDORS as readonly string[]).includes(vendor))
+  return {
+    vendors: known,
+    timeoutMs: config.freeTimeoutMs ?? FREE_DEFAULT_TIMEOUT_MS,
+  }
 }
 
 /**

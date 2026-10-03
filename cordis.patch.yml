@@ -1,8 +1,12 @@
 # dsh-web-search-doko bundle patch.
 #
-# Registers the doko-backed web providers, then points the `web` service
-# (from `@deepseek-ai/dsh-base`) at doko. Rows are applied as a layer over
+# Registers the doko-backed web providers, the keyless `free` ring, and the
+# `doko-first` rescue chain, then points the `web` service (from
+# `@deepseek-ai/dsh-base`) at `doko-first`: doko is primary, and the free ring
+# is a one-shot rescue when doko hard-fails. Rows are applied as a layer over
 # `@deepseek-ai/dsh-base`, so this restates the whole `web` config.
+#
+# Other selections: `doko` (doko only), `free` (keyless ring only).
 - insert:
     - id: web-search-doko
       name: 'dsh-web-search-doko'
@@ -10,5 +14,5 @@
 - id: web
   name: '@deepseek-ai/dsh-web'
   config:
-    searchProvider: doko
-    fetchProvider: doko
+    searchProvider: doko-first
+    fetchProvider: doko-first

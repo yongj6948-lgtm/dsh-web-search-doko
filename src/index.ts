@@ -1,16 +1,26 @@
 /**
- * doko web-access plugin for DeepSeek Harness. Registers a search provider and
- * a fetch provider on the `ctx.web` capability seam, both backed by a local
- * doko-server (Chrome + Dokobot). Set `searchProvider: doko` /
- * `fetchProvider: doko` on the `dsh-web` row to select them.
+ * doko web-access plugin for DeepSeek Harness. Registers web search/fetch
+ * providers on the `ctx.web` capability seam:
+ *
+ * - `doko`      — local doko-server (Chrome + Dokobot), the primary backend
+ * - `free`      — keyless public ring (Exa/Keenable/Parallel/…), no server needed
+ * - `doko-first`— doko primary with a one-shot `free` rescue on hard failure
+ *
+ * Select one via the `web` row's `searchProvider` / `fetchProvider`.
  * @module dsh-web-search-doko
  */
 
 import type { Context } from '@deepseek-ai/cordis'
 import type {} from '@deepseek-ai/dsh-web'
-import { Config, resolveOptions, type Config as DokoConfig } from './options.js'
+import { Config, resolveOptions, resolveFreeOptions, type Config as DokoConfig } from './options.js'
 import { DokoSearchProvider } from './search-provider.js'
 import { DokoFetchProvider } from './fetch-provider.js'
+import { FreeSearchProvider, FreeFetchProvider } from './free-provider.js'
+import {
+  DokoFirstFetchProvider,
+  DokoFirstSearchProvider,
+  type RescueHooks,
+} from './rescue-provider.js'
 
 /** Cordis plugin name used by loader diagnostics. */
 export const name = 'web-search-doko'
@@ -21,9 +31,30 @@ export const inject = ['web']
 export { Config }
 export type { DokoConfig }
 
-/** Register the doko search and fetch providers with `ctx.web`. */
+/** Register the doko, keyless-free, and doko→free rescue providers with `ctx.web`. */
 export function apply(ctx: Context, config: DokoConfig): void {
   const options = resolveOptions(ctx, config)
-  ctx.web.registerSearchProvider(new DokoSearchProvider(options))
-  ctx.web.registerFetchProvider(new DokoFetchProvider(options))
+  const dokoSearch = new DokoSearchProvider(options)
+  const dokoFetch = new DokoFetchProvider(options)
+  ctx.web.registerSearchProvider(dokoSearch)
+  ctx.web.registerFetchProvider(dokoFetch)
+
+  const free = resolveFreeOptions(config)
+  if (free.vendors.length === 0) return
+
+  const freeSearch = new FreeSearchProvider(free)
+  const freeFetch = new FreeFetchProvider(free)
+  ctx.web.registerSearchProvider(freeSearch)
+  ctx.web.registerFetchProvider(freeFetch)
+
+  const hooks: RescueHooks = {
+    onRescue: (event) => {
+      ctx.logger?.warn?.(
+        `web: ${event.primary} ${event.kind} failed, rescued by ${event.rescue}: `
+        + (event.error instanceof Error ? event.error.message : String(event.error)),
+      )
+    },
+  }
+  ctx.web.registerSearchProvider(new DokoFirstSearchProvider(dokoSearch, freeSearch, hooks))
+  ctx.web.registerFetchProvider(new DokoFirstFetchProvider(dokoFetch, freeFetch, hooks))
 }
