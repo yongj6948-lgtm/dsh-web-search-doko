@@ -40,12 +40,19 @@ export function apply(ctx: Context, config: DokoConfig): void {
   ctx.web.registerFetchProvider(dokoFetch)
 
   const free = resolveFreeOptions(config)
-  if (free.vendors.length === 0) return
 
-  const freeSearch = new FreeSearchProvider(free)
-  const freeFetch = new FreeFetchProvider(free)
-  ctx.web.registerSearchProvider(freeSearch)
-  ctx.web.registerFetchProvider(freeFetch)
+  // The keyless ring is only registered when vendors remain enabled. `doko-first`
+  // is registered unconditionally: with an empty ring it degrades to doko alone,
+  // so `freeVendors: []` disables the ring without leaving a `doko-first` gap
+  // that the bundle patch would otherwise select.
+  let freeSearch: FreeSearchProvider | undefined
+  let freeFetch: FreeFetchProvider | undefined
+  if (free.vendors.length > 0) {
+    freeSearch = new FreeSearchProvider(free)
+    freeFetch = new FreeFetchProvider(free)
+    ctx.web.registerSearchProvider(freeSearch)
+    ctx.web.registerFetchProvider(freeFetch)
+  }
 
   const hooks: RescueHooks = {
     onRescue: (event) => {

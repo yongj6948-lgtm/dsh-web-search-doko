@@ -92,7 +92,7 @@ export const Config: z<Config> = z.object({
   timeoutMs: z.number().step(1).min(1),
   tbs: z.string(),
   includeSerpText: z.boolean(),
-  freeVendors: z.array(z.union(FREE_VENDORS)),
+  freeVendors: z.array(z.union(FREE_VENDORS)).default([...FREE_DEFAULT_VENDORS]),
   freeTimeoutMs: z.number().step(1).min(1),
 })
 

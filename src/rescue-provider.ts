@@ -51,10 +51,10 @@ export class DokoFirstSearchProvider implements WebSearchProvider {
   readonly id = DOKO_FIRST_PROVIDER_ID
 
   private readonly primary: WebSearchProvider
-  private readonly rescue: WebSearchProvider
+  private readonly rescue: WebSearchProvider | undefined
   private readonly hooks: RescueHooks
 
-  constructor(primary: WebSearchProvider, rescue: WebSearchProvider, hooks: RescueHooks = {}) {
+  constructor(primary: WebSearchProvider, rescue?: WebSearchProvider, hooks: RescueHooks = {}) {
     this.primary = primary
     this.rescue = rescue
     this.hooks = hooks
@@ -62,7 +62,7 @@ export class DokoFirstSearchProvider implements WebSearchProvider {
 
   /** Usable when either leg is usable; no network call. */
   available(): boolean {
-    return this.primary.available() || this.rescue.available()
+    return this.primary.available() || this.rescue?.available() === true
   }
 
   search(request: WebSearchRequest, signal?: AbortSignal): Promise<WebSearchResult> {
@@ -76,10 +76,10 @@ export class DokoFirstFetchProvider implements WebFetchProvider {
   readonly id = DOKO_FIRST_PROVIDER_ID
 
   private readonly primary: WebFetchProvider
-  private readonly rescue: WebFetchProvider
+  private readonly rescue: WebFetchProvider | undefined
   private readonly hooks: RescueHooks
 
-  constructor(primary: WebFetchProvider, rescue: WebFetchProvider, hooks: RescueHooks = {}) {
+  constructor(primary: WebFetchProvider, rescue?: WebFetchProvider, hooks: RescueHooks = {}) {
     this.primary = primary
     this.rescue = rescue
     this.hooks = hooks
@@ -87,7 +87,7 @@ export class DokoFirstFetchProvider implements WebFetchProvider {
 
   /** Usable when either leg is usable; no network call. */
   available(): boolean {
-    return this.primary.available() || this.rescue.available()
+    return this.primary.available() || this.rescue?.available() === true
   }
 
   fetch(request: WebFetchRequest, signal?: AbortSignal): Promise<WebFetchResult> {
@@ -104,11 +104,14 @@ export class DokoFirstFetchProvider implements WebFetchProvider {
 async function withRescue<P extends Providerish, T>(
   kind: 'search' | 'fetch',
   primary: P,
-  rescue: P,
+  rescue: P | undefined,
   signal: AbortSignal | undefined,
   hooks: RescueHooks,
   run: (provider: P) => Promise<T>,
 ): Promise<T> {
+  // No rescue leg configured: the chain degrades to the primary alone.
+  if (rescue === undefined) return run(primary)
+
   // A missing primary (e.g. doko not configured) is itself a hard failure.
   if (!primary.available()) {
     if (!rescue.available()) return run(primary)
