@@ -36,13 +36,13 @@
     "@deepseek-ai/dsh-web": ">=0.0.1"
   },
   "dependencies": {
-    "@deepseek-ai/dsh-llm": "^0.0.1-rc.1",
-    "@deepseek-ai/dsh-timeout": "^0.0.1-rc.1",
     "@deepseek-ai/schemastery": ">=3.0.0"
   },
   "devDependencies": {
     "@deepseek-ai/cordis": "^4.0.4",
     "@deepseek-ai/dsh-launch-environment": "^0.0.1-rc.3",
+    "@deepseek-ai/dsh-llm": "^0.0.1-rc.1",
+    "@deepseek-ai/dsh-timeout": "^0.0.1-rc.1",
     "@deepseek-ai/dsh-web": "^0.0.1-rc.1",
     "@types/node": "^22.10.0",
     "typescript": "^5.7.0"
