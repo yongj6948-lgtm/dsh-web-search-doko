@@ -44,16 +44,23 @@ only) to opt out.
 
 ## Install
 
-Prerequisites: a reachable doko-server running on a host with Chrome + the
-Dokobot bridge.
+Prerequisites:
 
-From GitHub (a git install fetches sources and runs the package's `prepare`
-build, which needs an explicit pnpm allow):
+- A reachable doko-server running on a host with Chrome + the Dokobot bridge.
+- A healthy profile: `dsh --profile <p> --dump-config` should already succeed
+  before you add anything.
+
+This is a source-only repo: a git install fetches the sources and runs the
+package's `prepare` build, which pnpm gates behind an explicit allow. The allow
+key must be the **resolved spec**, not the package name — a short key such as
+`dsh-web-search-doko: true` is silently ignored and the install fails with
+`ERR_PNPM_GIT_DEP_PREPARE_NOT_ALLOWED`. That error prints the exact key; add it
+verbatim:
 
 ```yaml
 # <profile>/pnpm-workspace.yaml
 allowBuilds:
-  dsh-web-search-doko: true
+  "dsh-web-search-doko@https://codeload.github.com/<owner>/dsh-web-search-doko/tar.gz/<sha>": true
 ```
 
 ```sh
@@ -63,6 +70,30 @@ dsh --profile web
 ```
 
 Pin `#<sha>` for a reproducible install; omit it to follow the default branch.
+The resolved spec embeds the commit sha, so the allow key changes whenever you
+switch revisions — copy the key pnpm prints rather than guessing it.
+
+The build runs `npm install`, pulling the full devDependency tree (TypeScript,
+`@types/node`, several `@deepseek-ai/*`). On sandboxed machines that can fail
+with `EPERM` under `~/.npm/_cacache` even when ownership is fine; run the install
+outside the sandbox, or prebuild once and install from the local tarball.
+
+`dsh plugin add` records the package in both the profile's `package.json` and
+its `dsh.profile.bundles`. Both matter: a `cordis.patch.yml` `insert` alone is
+composed into `--dump-config` but never resolved, because the loader builds its
+package table from `dsh.profile.bundles`. If you install by hand, add the bundle
+there too.
+
+### Peer dependencies
+
+This plugin (like `@deepseek-ai/dsh-web` itself) has `@deepseek-ai/cordis` as a
+peer. Profiles with `autoInstallPeers: false` (the default) do not pull it in
+automatically, and when it is missing the only symptom is a vague
+`failed to import`. If you hit that, add it explicitly:
+
+```sh
+dsh plugin --profile web add @deepseek-ai/cordis@^4.0.4
+```
 
 The bundle patch registers the plugin and points the web service at it:
 
@@ -91,6 +122,32 @@ the profile's `cordis.patch.yml`:
     baseURL: 'http://127.0.0.1:8080'
 ```
 
+### Troubleshooting
+
+When the plugin fails to load, the harness log usually only says:
+
+```
+dsh: warning: 1 entry did not activate
+web-search-doko (dsh-web-search-doko): failed to import
+```
+
+The real cause is swallowed. Import the built entry by hand to surface it (run
+from the profile directory so `@deepseek-ai/*` peers resolve):
+
+```sh
+cd ~/.dsh/profiles/<p>
+node --input-type=module -e "await import('dsh-web-search-doko').then(() => console.log('ok'))"
+```
+
+Common causes it reveals:
+
+- `ERR_MODULE_NOT_FOUND: '@deepseek-ai/cordis'` → install the peer (above).
+- The package is in `cordis.patch.yml` but not in `dsh.profile.bundles` → it is
+  never resolved (see Install).
+- `configured web provider "doko-first" is not registered` at tool-call time →
+  the plugin did not load, or `freeVendors` is `[]` while the patch still selects
+  `doko-first`. If you edited sources, rebuild `lib/` (see Development).
+
 ## Configure
 
 All fields are optional. `cordis.yml`:
@@ -118,7 +175,7 @@ All fields are optional. `cordis.yml`:
 | `timeoutMs` | `90000` | — | per-request timeout |
 | `tbs` | — | — | Google `tbs` time-range parameter |
 | `includeSerpText` | `false` | — | also return cleaned SERP text as `content` |
-| `freeVendors` | `['exa','keenable','parallel']` | — | keyless ring order; `[]` disables the `free` providers |
+| `freeVendors` | `['exa','keenable','parallel']` | — | keyless ring order; `[]` disables the `free` providers (and leaves `doko-first` as doko-only) |
 | `freeTimeoutMs` | `30000` | — | per-request timeout for keyless vendors |
 
 ### Keyless `free` ring
@@ -204,8 +261,8 @@ This is intentionally forgiving: an unparsable block is skipped, never an error.
 
 ```sh
 npm install --legacy-peer-deps   # @deepseek-ai/* packages carry workspace peers
-npm run build                    # tsc -> lib/
-npm test                         # parse unit tests (fixture-driven)
+npm run build                    # tsc -> lib/  (gitignored; prepare runs it on install)
+npm test                         # builds first, then runs the unit tests
 node scripts/live-smoke.mjs http://127.0.0.1:8080   # needs a live doko-server
 node scripts/live-smoke-free.mjs                     # needs only outbound HTTPS
 node scripts/live-smoke-free.mjs "query" ddgs        # DDGS needs a proxy on blocked networks
